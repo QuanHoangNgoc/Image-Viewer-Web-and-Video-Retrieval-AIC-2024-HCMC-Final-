@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Image Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSV Image Viewer</h1>
+        </header>
+        
+        
+        <section class="user-query">
+            <div id="inputContent">
+                <!-- <label for="userInput">User Query:</label> -->
+                <input type="text" id="userInput" placeholder="Enter full query..." />
+                <div id="Query"></div> 
+            </div>
+        </section>
+        
+        
+        <section class="upload-section">
+            <input type="file" id="csvFileInput" accept=".csv" class="file-input" />
+        </section>
+        
+        
+        <section class="search-section">
+            <input type="text" id="searchInput" placeholder="Search on displaying images: (ex:!,; )" />
+            <button id="searchButton">Expression</button>
+            <button id="clearButton">Fresh</button>
+        </section>
+        
+        
+        <section class="image-section">
+            <div class="image-container" id="imageContainer"></div>
+        </section>
+        
+        <section class="image-control">
+            <button id="backButton">TabBack</button>
+            <input type="text" id="mappingTextBox" value="Click an image!" readonly />
+        </section>
+        
+        
+        <section class="chart-section">
+            <button id="showHistogram">Show Histogram: 1 turnshow</button>
+            <canvas id="myHistogram" width="400" height="200" style="display: none;"></canvas>
+            <canvas id="myPieChart" width="400" height="200" style="display: none;"></canvas>
+        </section>
+        
+        <footer>
+            <button id="csvButton">Export CSV</button>
+            <div id="debug"></div>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="data.js"></script>
+    <script src="config.js"></script>
+    <script src="image.js"></script>
+    <script src="histogram.js"></script>
+    <script src="event_controller.js"></script>
+    <script src="base.js"></script>
+</body>
+</html>
