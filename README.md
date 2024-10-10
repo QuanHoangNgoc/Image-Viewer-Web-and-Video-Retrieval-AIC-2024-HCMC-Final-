@@ -1,4 +1,0 @@
-- ***[Data of Team - Drive](https://drive.google.com/drive/folders/12DBmsS7SX51RvYXQ7ctol8y6qbeYBq2O)***
-- ***[Codalab](https://codalab.lisn.upsaclay.fr/competitions/20122#participate)***
-- ***[SheetBTC](https://docs.google.com/spreadsheets/d/1mO3zS79L1HMLZ-BLpyy8E-n9RROOElms5DS_Gi1gKiU/edit?gid=805777964#gid=805777964)***
-- ***[Link Record Training - Sheet](https://docs.google.com/spreadsheets/d/1HlDOCYJt9e1nXv-59wE48o98ONqFN6-Jyak0iRhHHRk/edit?usp=drive_link)***

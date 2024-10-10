@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Image Viewer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        input[type="file"] {
+            display: block;
+            margin: 0 auto;
+            padding: 8px 15px;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .image-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 images per row */
+            gap: 15px;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .image-container img.highlighted {
+            border: 4px solid #B0BEC5; /* Viền xám xanh nhạt */
+            box-shadow: 0 0 10px 5px rgba(176, 190, 197, 0.5); /* Glow xám xanh nhạt */
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .image-container img:focus {
+            border: 4px solid #4CAF50; /* Highlighted green border */
+            box-shadow: 0 0 15px 5px rgba(76, 175, 80, 0.6); /* Green glow */
+            outline: none; /* No default focus outline */
+        }
+        
+        #backButton {
+            display: none;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block;
+            text-align: center;
+            width: 200px;
+        }
+        
+        #backButton:hover {
+            background-color: #555;
+        }
+        
+        input[type="text"] {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+            background-color: #fff;
+        }
+        
+        .chart-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        button#showHistogram {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button#showHistogram:hover {
+            background-color: #0056b3;
+        }
+        
+        canvas {
+            max-width: 600px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        #fileContent {
+            white-space: pre-wrap; /* This will preserve new lines in the text */
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        #submitButton, #searchButton {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px 15px; /* Padding for size */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+        }
+        
+        #submitButton:hover, #searchButton:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        
+        #userInput {
+            padding: 10px; /* Padding inside the input */
+            font-size: 16px; /* Font size */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            margin-bottom: 20px; /* Space below the input */
+            width: calc(100% - 22px); /* Full width with padding consideration */
+        }
+        
+        #searchInput {
+            padding: 10px; /* Padding inside the input */
+            font-size: 16px; /* Font size */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            width: 200px; /* Set width for input */
+        }
+    </style>
+</head>
+
+
+
+<!--
+######################################################################################################################
+######################################################################################################################
+-->
+<body>
+    <h1>Upload CSV to View Images</h1>
+    
+    <input type="file" id="csvFileInput" accept=".csv" />
+    <br/><br/>
+    <div class="image-container" id="imageContainer"></div>
+    
+    <div class="idx000" id="idx000">
+        <button id="backButton">Back</button>
+        <input type="text" id="textBox" value="Click an image!" readonly />
+    </div>
+    
+    
+    <div id="fileContent">User Query is: 
+        <!-- <input type="file" id="fileInput" accept=".txt"> -->
+        <div id="Query"></div>
+        <!-- <button id="submitButton">Submit</button> -->
+    </div>
+    <input type="text" id="userInput" placeholder="Enter something..." />
+    
+    
+    <div class="chart-container">
+        <button id="showHistogram">Show Histogram</button>
+        <canvas id="myHistogram" width="400" height="200" style="display: none;"></canvas>
+        <canvas id="myPieChart" width="400" height="200" style="display: none;"></canvas>
+        
+        <input type="text" id="searchInput" placeholder="Search for images..." />
+        <button id="searchButton">Search on 100 Original Images</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    
+    <div id="debug"></div> <!-- Div element to hold the text -->
+    
+    
+    <script>
+        // ######################################################################################################################
+        // Get the div element from the DOM
+        const textContainer = document.getElementById("debug");
+        const BACK = '\\'; 
+        //!!! PLEASE replace config 
+        function createImagePath(baseName, frameId) { 
+            let baseVideo = baseName.substring(0, baseName.lastIndexOf('_'));
+            let number = (frameId / 25) + 1; 
+            return `D:\\cd_data_C\\Desktop\\Web\\Images\\AIC2024KeyFrames\\Keyframes_${baseVideo}\\${baseName}\\${baseName}_${number}.jpg`;
+        }
+        function mappingFrame(num) {
+            return (num-1) * 25;   
+        }
+        function changeTextBox(filePath) {
+            const folderPath = filePath.substring(0, filePath.lastIndexOf(BACK) + 1);
+            const baseFileName = filePath.substring(filePath.lastIndexOf(BACK) + 1, filePath.lastIndexOf('_'));
+            const extension = filePath.substring(filePath.lastIndexOf('.'));
+            const numFileName = filePath.substring(filePath.lastIndexOf('_') + 1, filePath.lastIndexOf('.')); 
+            let num = parseInt(numFileName, 10);
+            
+            num = mappingFrame(num); 
+            const newText = `${baseFileName}, ${num}`;
+            document.getElementById('textBox').value = newText;
+        }
+        
+        
+        // ######################################################################################################################
+        document.getElementById('csvFileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const csvContent = e.target.result;
+                    processCSV(csvContent);
+                };
+                reader.readAsText(file);
+            }
+        });
+        
+        let imagePaths = [];
+        let originImagePaths = []; 
+        function _formatImagePaths(list) {
+            const imagePaths = [];
+            list.forEach((imagePath, index) => {
+                newFilePath = imagePath.replace(/\//g, BACK);
+                imagePaths.push(newFilePath);
+            });
+            return imagePaths; 
+        }
+        function copyList(list) {
+            let result = []; 
+            list.forEach(x => {
+                result.push(x); 
+            }); 
+            return result; 
+        }
+        function processCSV(csvContent) {        
+            const lines = csvContent.split('\n'); // Split the CSV into lines
+            
+            lines.forEach(line => {
+                const [baseName, number] = line.split(','); // Split each line by comma
+                if (baseName && number) {
+                    // Construct the image path
+                    const imagePath = createImagePath(baseName, number);
+                    imagePaths.push(imagePath); // Add to the array
+                    // debug 
+                    // // Get the div element from the DOM
+                    // const textContainer = document.getElementById("debug");
+                    // // Append the text inside the div element for debugging
+                    // textContainer.textContent += imagePath + '\n'; 
+                }
+            });
+            
+            // Clean up and format image paths
+            imagePaths = imagePaths.map(line => line.trim()).filter(path => path !== "");
+            imagePaths = _formatImagePaths(imagePaths);
+            originImagePaths = copyList(imagePaths); 
+            
+            // Show all images
+            showAllImages();
+            
+            // Hide back button initially (when loading a new CSV file)
+            document.getElementById('backButton').style.display = 'none';
+        }
+        
+        
+        function showAllImages() {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // Clear any previous images
+            
+            imagePaths =  copyList(originImagePaths); 
+            imagePaths.forEach((imagePath, index) => {
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = `Image ${index + 1}`;
+                
+                // Extract folder and file name from the image path
+                const folderPath = imagePath.substring(0, imagePath.lastIndexOf(BACK));
+                const fileName = imagePath.substring(imagePath.lastIndexOf(BACK) + 1);
+                
+                // Add title attribute to display the folder and file info on hover
+                img.title = `Folder: ${folderPath}\nFile: ${fileName}`;
+                
+                img.addEventListener('click', () => displayImageRange(imagePath));  // Add click event
+                imageContainer.appendChild(img);
+            });
+        }
+        
+        
+        // ######################################################################################################################
+        const DIFF = 10; 
+        function _generateImagePaths(filePath) {
+            // Extract the folder path and base file name
+            const folderPath = filePath.substring(0, filePath.lastIndexOf(BACK) + 1);
+            const baseFileName = filePath.substring(filePath.lastIndexOf(BACK) + 1, filePath.lastIndexOf('_'));
+            const extension = filePath.substring(filePath.lastIndexOf('.'));
+            const numFileName = filePath.substring(filePath.lastIndexOf('_') + 1, filePath.lastIndexOf('.')); 
+            
+            let num = parseInt(numFileName, 10);
+            let startNumber = Math.max(num - DIFF, 1);
+            let endNumber = num + DIFF; 
+            const imagePaths = [];
+            // Generate image paths from startNumber to endNumber
+            for (let i = startNumber; i <= endNumber; i++) {
+                const newFileName = `${baseFileName}_${i}${extension}`;
+                const newFilePath = folderPath + newFileName;
+                imagePaths.push(newFilePath);
+            }
+            
+            return imagePaths;
+        }
+        function displayImageRange(imagePath) {
+            changeTextBox(imagePath)
+            imagePaths = _generateImagePaths(imagePath); 
+            
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // Clear any previous images
+            
+            imagePaths.forEach((imagePath, index) => {
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = `Image ${index + 1}`;
+                
+                // Extract folder and file name from the image path
+                const folderPath = imagePath.substring(0, imagePath.lastIndexOf(BACK));
+                const fileName = imagePath.substring(imagePath.lastIndexOf(BACK) + 1);
+                
+                // Add title attribute to display the folder and file info on hover
+                img.title = `Folder: ${folderPath}\nFile: ${fileName}`;
+                img.tabIndex = 0; // Make image focusable
+                if(index == DIFF) {
+                    img.classList.add('highlighted');
+                }
+                // Add click event to highlight the image
+                img.addEventListener('click', function() {
+                    img.focus(); // Focus on the clicked image (triggers CSS highlight)
+                    displayImageRange(imagePath); // Display the range of images again
+                });
+                imageContainer.appendChild(img); // display into container 
+            });
+            
+            // Show back button to allow user to go back to the initial state of showing all images
+            document.getElementById('backButton').style.display = 'inline';
+        }
+        
+        // ######################################################################################################################
+        // Back button functionality to reset to show all images
+        document.getElementById('backButton').addEventListener('click', function () {
+            showAllImages();  // Simply show all images again
+            document.getElementById('backButton').style.display = 'none';  // Hide back button after going back to all images
+        });
+        
+        // // Add an event listener to the button
+        // document.getElementById('submitButton').addEventListener('click', function() {
+        //     // Get the value from the input field
+        //     const userInput = document.getElementById('userInput').value;
+        
+        //     // Display the value inside the displayText div
+        //     document.getElementById('Query').textContent = userInput || "Please enter some text.";
+        //     document.getElementById('userInput').value = ""; 
+        // }); 
+        // document.getElementById('fileInput').addEventListener('change', function(event) {
+        //     const file = event.target.files[0]; // Get the uploaded file
+        //     if (file) {
+        //         const reader = new FileReader();
+        
+        //         // When the file is read
+        //         reader.onload = function(e) {
+        //             const content = e.target.result;
+        //             document.getElementById('fileContent').textContent = content; // Display the file content
+        //         };
+        
+        //         // Read the file as text
+        //         reader.readAsText(file);
+        //     } else {
+        //         document.getElementById('fileContent').textContent = 'No file selected.';
+        //     }
+        // });
+        document.getElementById('userInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                // Prevent default form submission if in a form
+                event.preventDefault();
+                // Call a function or execute code here
+                // console.log('User Input Submitted: ', this.value);
+                
+                // Display the value inside the displayText div
+                const userInput = document.getElementById('userInput').value;
+                document.getElementById('Query').textContent = userInput || "Please enter some text.";
+                // Optionally, clear the input after submission
+                this.value = '';
+            }
+        });
+        
+        function showSearchImages(searchInput) {
+            const items = searchInput.split(/[ ,;]+/);
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // Clear any previous images
+            
+            const newlist = []; 
+            imagePaths = copyList(originImagePaths); 
+            imagePaths.forEach((imagePath, index) => {
+                const img = document.createElement('img');
+                img.src = imagePath;
+                img.alt = `Image ${index + 1}`;
+                
+                // Extract folder and file name from the image path
+                const folderPath = imagePath.substring(0, imagePath.lastIndexOf(BACK));
+                const fileName = imagePath.substring(imagePath.lastIndexOf(BACK) + 1);
+                
+                // Add title attribute to display the folder and file info on hover
+                img.title = `Folder: ${folderPath}\nFile: ${fileName}`;
+                
+                img.addEventListener('click', () => displayImageRange(imagePath));  // Add click event
+                
+                if(items.some(substring => imagePath.includes(substring))) {
+                    imageContainer.appendChild(img);
+                    newlist.push(imagePath); 
+                }
+            });
+            
+            imagePaths = copyList(newlist); 
+            
+            // Show back button to allow user to go back to the initial state of showing all images
+            document.getElementById('backButton').style.display = 'inline';
+        }
+        document.getElementById('searchButton').addEventListener('click', function() {
+            // Get the value from the input field
+            const searchInput = document.getElementById('searchInput').value;
+            // textContainer.textContent += searchInput + '\n'; 
+            showSearchImages(searchInput); 
+            // textContainer.textContent += searchInput + '\n'; 
+        }); 
+        
+        function showPie(values) {
+            // Count occurrences of each value
+            const counts = {};
+            values.forEach((value, index) => {
+                let score = 0.0; // Initialize score as a float
+                if (index < 1) score += 0.2; 
+                if (index < 5) score += 0.2; 
+                if (index < 20) score += 0.2; 
+                if (index < 50) score += 0.2; 
+                if(index < 100) score += 0.2; 
+                counts[value] = (counts[value] || 0) + score; 
+            });
+            
+            // Prepare data for the pie chart
+            let labels = Object.keys(counts);
+            let data = Object.values(counts);
+            
+            // Create an array of [label, value] pairs
+            const combined = labels.map((label, index) => [label, data[index]]);
+            // Sort the array based on the value (second element of the pair) in descending order
+            combined.sort((a, b) => b[1] - a[1]); // Sort by the second element (value)
+            // Separate the sorted labels and data back into individual arrays
+            labels = combined.map(pair => pair[0]);
+            data = combined.map(pair => pair[1]);
+            
+            // Show the canvas
+            const canvas = document.getElementById('myPieChart');
+            const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';  // Make canvas visible
+            
+            // Create the pie chart
+            new Chart(ctx, {
+                type: 'pie',  // Type of chart
+                data: {
+                    labels: labels,  // Unique values as labels
+                    datasets: [{
+                        label: 'Frequency',
+                        data: data,  // Counts of each value
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            enabled: true
+                        }
+                    }
+                }
+            });
+        }
+        function showHistogram(values) {
+            // Count occurrences of each value
+            const counts = {};
+            values.forEach(value => {
+                counts[value] = (counts[value] || 0) + 1;
+            });
+            
+            // Prepare data for the histogram
+            const labels = Object.keys(counts);
+            const data = Object.values(counts);
+            
+            // Show the canvas
+            const canvas = document.getElementById('myHistogram');
+            const ctx = canvas.getContext('2d');
+            canvas.style.display = 'block';  // Make canvas visible
+            
+            // Create the histogram
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,  // Unique values as labels
+                    datasets: [{
+                        label: 'Frequency',
+                        data: data,  // Counts of each value
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        document.getElementById('showHistogram').addEventListener('click', function () {
+            const values = []; 
+            imagePaths = copyList(originImagePaths); 
+            imagePaths.forEach((filePath, index) => {
+                const baseFileName = filePath.substring(filePath.lastIndexOf(BACK) + 1, filePath.lastIndexOf('_'));
+                values.push(baseFileName); 
+            }); 
+            showHistogram(values); 
+            showPie(values); 
+        });
+    </script>
+</body>
+</html>
