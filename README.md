@@ -18,7 +18,7 @@ This project was built to make large-scale image datasets easier to browse and s
 <img src="https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c" alt="visual" width="400"/>
 <img src="https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1" alt="visual" width="400"/>
 
-- ***Note***: When I joined, our ranking rose to **top 10 score**. This is because I developed advanced image search options based on my knowledge and learning (two-phase search, element-centered search, conscious search) that increased precision and recall for faster image discovery and exploitation. Additionally, I also designed the UI, implemented the web using **JavaScript**, and tested it to ensure a smooth, user-friendly experience for the team.
+- [***Note***](#): When I joined, our ranking rose to **top 10 score**. This is because I developed advanced image search options based on my knowledge and learning (two-phase search, element-centered search, conscious search) that increased precision and recall for faster image discovery and exploitation. Additionally, I also designed the UI, implemented the web using **JavaScript**, and tested it to ensure a smooth, user-friendly experience for the team.
 
 ### +Key Results
 - **Search by text queries:** Input descriptions to find the most relevant images.
