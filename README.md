@@ -11,7 +11,7 @@ This project was built to make large-scale image datasets easier to browse and s
 - **Developers** are working with image datasets that need to test and visualize image search functionalities.
 - **Users** with an interest in simple and accessible image exploration tools.
 
-**Demo**: [***Youtube***](#https://youtu.be/beTfzzNcTM4)
+**Demo**: [***Youtube***](https://youtu.be/beTfzzNcTM4)
 ### +Ranking
 
 <img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="400"/>
