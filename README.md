@@ -11,7 +11,7 @@ This project was built to make large-scale image datasets easier to browse and s
 - **Developers** are working with image datasets that need to test and visualize image search functionalities.
 - **Users** with an interest in simple and accessible image exploration tools.
 
-**Demo**: [Click here for a live demo](#)
+**Demo**: [***Youtube***](#https://youtu.be/beTfzzNcTM4)
 ### +Ranking
 
 <img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="400"/>
@@ -51,4 +51,9 @@ Feel free to fork this repository and submit pull requests. Contributions are al
 
 ## ⭐ Support & Donations
 If you like this project, please **give it a star** on GitHub! ⭐
-**Author**: Quan-Hoang-Ngoc  
+
+## 👤 Author
+
+This project was co-developed by **[Team members]**. 
+- Nhat-Minh Nguye, Dai-Truong Le-Trong [v]
+- Dat-Tran, Thuong-Phuc
