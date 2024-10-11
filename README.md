@@ -3,7 +3,7 @@
 ![image](https://user-images.githubusercontent.com/xx/xx/image.png)
 
 ## 🔍 What is it?
-This project implements a CSV-Based Image Viewer and Search Engine that allows users to search images based on text queries or specific components. Users can explore and filter images from a dataset using a customized, simple web interface.
+This project implements a CSV-Based Image Viewer and Search Engine that allows users to search images based on text queries or specific components. Users can explore and manage images from a dataset using a customized, simple web interface.
 
 ## 🤔 Why did we build it?
 This project was built to make large-scale image datasets easier to browse and search. It enables users to search using natural language descriptions, match visual-textual components, and filter results by multiple criteria.
