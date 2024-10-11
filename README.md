@@ -1,8 +1,8 @@
 # 📷 ***CSV Image Viewer & Search Engine*** (AIC 2024 HCMC Final)
-![image](https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3)
-![image](https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c)
-![image](https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1)
 
+<img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="400"/>
+<img src="https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c" alt="visual" width="400"/>
+<img src="https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1" alt="visual" width="400"/>
 
 ## 🔍 What is it?
 This project implements a CSV-Based Image Viewer and Search Engine that allows users to search images based on text queries or specific components. Users can explore and manage images from a dataset using a customized, simple web interface.
