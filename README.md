@@ -13,7 +13,8 @@ This project was built to make large-scale image datasets easier to browse and s
 
 **Demo**: [Click here for a live demo](#)
 ### Ranking
-<img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="250"/>
+
+<img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="300"/>
 <img src="https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c" alt="visual" width="300"/>
 <img src="https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1" alt="visual" width="300"/>
 
