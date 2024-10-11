@@ -14,9 +14,9 @@ This project was built to make large-scale image datasets easier to browse and s
 **Demo**: [Click here for a live demo](#)
 ### +Ranking
 
-<img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="500"/>
-<img src="https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c" alt="visual" width="500"/>
-<img src="https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1" alt="visual" width="500"/>
+<img src="https://github.com/user-attachments/assets/391d6ae8-ef71-42dc-a034-1abc5f7a35b3" alt="visual" width="400"/>
+<img src="https://github.com/user-attachments/assets/bdeab9de-4f64-4eff-a565-eec56999dc5c" alt="visual" width="400"/>
+<img src="https://github.com/user-attachments/assets/9a051e57-ce10-454e-a665-4985e33d72c1" alt="visual" width="400"/>
 
 - ***Note***: When I joined, our ranking rose to **top 10 score**. This is because I developed advanced image search options based on my knowledge and learning (two-phase search, element-centered search, conscious search) that increased precision and recall for faster image discovery and exploitation. Additionally, I also designed the UI, implemented the web using **JavaScript**, and tested it to ensure a smooth, user-friendly experience for the team.
 
